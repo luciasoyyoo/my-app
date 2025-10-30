@@ -20,28 +20,29 @@ public class App {
         String cmd = args[0].toLowerCase();
         switch (cmd) {
             case "greet":
-                LOGGER.info(greet(joinArgs(args, 1)));
+                LOGGER.log(Level.INFO, () -> greet(joinArgs(args, 1)));
                 break;
             case "sum":
-                LOGGER.info("Sum: " + sumFromArgs(args, 1));
+                LOGGER.log(Level.INFO, () -> "Sum: " + sumFromArgs(args, 1));
                 break;
             case "reverse":
-                LOGGER.info(reverse(joinArgs(args, 1)));
+                LOGGER.log(Level.INFO, () -> reverse(joinArgs(args, 1)));
                 break;
             case "prime":
                 if (args.length < 2) {
                     LOGGER.info("Usage: prime <number>");
                     break;
                 }
-                try {
-                    long n = Long.parseLong(args[1]);
-                    LOGGER.info(n + (isPrime(n) ? " is prime" : " is not prime"));
-                } catch (NumberFormatException e) {
+                    try {
+                        long n = Long.parseLong(args[1]);
+                        final long fn = n;
+                        LOGGER.log(Level.INFO, () -> fn + (isPrime(fn) ? " is prime" : " is not prime"));
+                    } catch (NumberFormatException e) {
                     LOGGER.log(Level.WARNING, "Invalid number: {0}", args[1]);
                 }
                 break;
             case "now":
-                LOGGER.info(now());
+                LOGGER.log(Level.INFO, App::now);
                 break;
             case "help":
             default:
@@ -70,18 +71,18 @@ public class App {
                     printUsage();
                     break;
                 case "greet":
-                    LOGGER.info(greet(joinArgs(parts, 1)));
+                    LOGGER.log(Level.INFO, () -> greet(joinArgs(parts, 1)));
                     break;
                 case "sum":
                     try {
                         double s = sumFromStringArray(parts, 1);
-                        LOGGER.info("Sum: " + s);
+                        LOGGER.log(Level.INFO, () -> "Sum: " + s);
                     } catch (NumberFormatException e) {
                         LOGGER.info("Provide numbers after 'sum', e.g. sum 1 2 3");
                     }
                     break;
                 case "reverse":
-                    LOGGER.info(reverse(joinArgs(parts, 1)));
+                    LOGGER.log(Level.INFO, () -> reverse(joinArgs(parts, 1)));
                     break;
                 case "prime":
                     if (parts.length < 2) {
@@ -90,13 +91,14 @@ public class App {
                     }
                     try {
                         long n = Long.parseLong(parts[1]);
-                        LOGGER.info(n + (isPrime(n) ? " is prime" : " is not prime"));
+                        final long fn2 = n;
+                        LOGGER.log(Level.INFO, () -> fn2 + (isPrime(fn2) ? " is prime" : " is not prime"));
                     } catch (NumberFormatException e) {
                         LOGGER.log(Level.WARNING, "Invalid number: {0}", parts[1]);
                     }
                     break;
                 case "now":
-                    LOGGER.info(now());
+                    LOGGER.log(Level.INFO, App::now);
                     break;
                 default:
                     LOGGER.info("Unknown command. Type 'help' for available commands.");
