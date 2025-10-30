@@ -3,11 +3,14 @@ package es.ull.esit.app;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Small demo CLI app with a few utilities (besides Hello World).
  */
 public class App {
+    private static final Logger LOGGER = Logger.getLogger(App.class.getName());
     public static void main(String[] args) {
         if (args == null || args.length == 0) {
             runInteractive();
@@ -17,28 +20,28 @@ public class App {
         String cmd = args[0].toLowerCase();
         switch (cmd) {
             case "greet":
-                System.out.println(greet(joinArgs(args, 1)));
+                LOGGER.info(greet(joinArgs(args, 1)));
                 break;
             case "sum":
-                System.out.println("Sum: " + sumFromArgs(args, 1));
+                LOGGER.info("Sum: " + sumFromArgs(args, 1));
                 break;
             case "reverse":
-                System.out.println(reverse(joinArgs(args, 1)));
+                LOGGER.info(reverse(joinArgs(args, 1)));
                 break;
             case "prime":
                 if (args.length < 2) {
-                    System.out.println("Usage: prime <number>");
+                    LOGGER.info("Usage: prime <number>");
                     break;
                 }
                 try {
                     long n = Long.parseLong(args[1]);
-                    System.out.println(n + (isPrime(n) ? " is prime" : " is not prime"));
+                    LOGGER.info(n + (isPrime(n) ? " is prime" : " is not prime"));
                 } catch (NumberFormatException e) {
-                    System.out.println("Invalid number: " + args[1]);
+                    LOGGER.log(Level.WARNING, "Invalid number: {0}", args[1]);
                 }
                 break;
             case "now":
-                System.out.println(now());
+                LOGGER.info(now());
                 break;
             case "help":
             default:
@@ -50,16 +53,16 @@ public class App {
     // Interactive menu when no args provided
     private static void runInteractive() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Welcome to the small App demo (type 'help' to list commands).\n");
+        LOGGER.info("Welcome to the small App demo (type 'help' to list commands).\n");
         while (true) {
-            System.out.print("> ");
+            LOGGER.info("> ");
             String line = sc.nextLine();
             if (line == null) break;
             String[] parts = line.trim().split("\\s+");
             if (parts.length == 0 || parts[0].isEmpty()) continue;
             String cmd = parts[0].toLowerCase();
             if (cmd.equals("exit") || cmd.equals("quit")) {
-                System.out.println("Bye!");
+                LOGGER.info("Bye!");
                 break;
             }
             switch (cmd) {
@@ -67,36 +70,36 @@ public class App {
                     printUsage();
                     break;
                 case "greet":
-                    System.out.println(greet(joinArgs(parts, 1)));
+                    LOGGER.info(greet(joinArgs(parts, 1)));
                     break;
                 case "sum":
                     try {
                         double s = sumFromStringArray(parts, 1);
-                        System.out.println("Sum: " + s);
+                        LOGGER.info("Sum: " + s);
                     } catch (NumberFormatException e) {
-                        System.out.println("Provide numbers after 'sum', e.g. sum 1 2 3");
+                        LOGGER.info("Provide numbers after 'sum', e.g. sum 1 2 3");
                     }
                     break;
                 case "reverse":
-                    System.out.println(reverse(joinArgs(parts, 1)));
+                    LOGGER.info(reverse(joinArgs(parts, 1)));
                     break;
                 case "prime":
                     if (parts.length < 2) {
-                        System.out.println("Usage: prime <number>");
+                        LOGGER.info("Usage: prime <number>");
                         break;
                     }
                     try {
                         long n = Long.parseLong(parts[1]);
-                        System.out.println(n + (isPrime(n) ? " is prime" : " is not prime"));
+                        LOGGER.info(n + (isPrime(n) ? " is prime" : " is not prime"));
                     } catch (NumberFormatException e) {
-                        System.out.println("Invalid number: " + parts[1]);
+                        LOGGER.log(Level.WARNING, "Invalid number: {0}", parts[1]);
                     }
                     break;
                 case "now":
-                    System.out.println(now());
+                    LOGGER.info(now());
                     break;
                 default:
-                    System.out.println("Unknown command. Type 'help' for available commands.");
+                    LOGGER.info("Unknown command. Type 'help' for available commands.");
                     break;
             }
         }
@@ -104,7 +107,7 @@ public class App {
     }
 
     private static void printUsage() {
-        System.out.println("Usage (CLI): java -jar app.jar <command> [args]\\n" +
+        LOGGER.info("Usage (CLI): java -jar app.jar <command> [args]\\n" +
                 "Commands:\n" +
                 "  greet <name>      - Greet the given name.\n" +
                 "  sum <n1> <n2>...  - Sum numbers and print result.\n" +
