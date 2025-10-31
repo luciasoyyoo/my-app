@@ -1,4 +1,4 @@
-# my-app
+# MyApp
 
 Proyecto Maven sencillo creado como plantilla para desarrollo y prácticas.
 
@@ -45,7 +45,7 @@ mvn test
 
 ## Insignias
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=luciasoyyoo_my-app&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=luciasoyyoo_my-app)
-[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=luciasoyyoo_my-app)](https://sonarcloud.io/summary/new_code?id=luciasoyyoo_my-app)
+[![SonarQube Cloud](https://sonarcloud.io/images/project_badges/sonarcloud-highlight.svg)](https://sonarcloud.io/summary/new_code?id=luciasoyyoo_my-app)
 
 ## Licencia
 Proyecto con licencia MIT (ajustar según necesidad).
